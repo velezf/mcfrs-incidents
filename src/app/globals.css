@@ -82,5 +82,6 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); f
 .marker-station.focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
 .marker-station.busy { border-color: var(--warn); }
 .marker-hospital { display:flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:9999px; background: var(--bg-1); border:1.5px solid var(--cat-ems); color: var(--cat-ems); font: 700 11px/1 var(--font-mono); }
+.marker-hydrant { display:flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:2px; background: var(--cat-water); color:#0b0d11; font: 700 10px/1 var(--font-mono); box-shadow: 0 0 0 1.5px var(--bg); }
 .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large { background: color-mix(in oklab, var(--accent) 30%, transparent) !important; }
 .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div { background: var(--accent) !important; color: var(--accent-fg) !important; font-family: var(--font-mono); font-weight: 700; }

@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+"""Import the county hydrant layer into the database (or var/hydrants.json without one).
+
+    cd api && uv run bin/import-hydrants            # fetch from the county FeatureServer
+    cd api && uv run bin/import-hydrants file.geojson   # or from a downloaded GeoJSON export
+
+Re-run to refresh; rows are replaced by id. Source and caveats: mcfrs_api/services/hydrants.py.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import sys
+from datetime import UTC, datetime
+from pathlib import Path
+
+import httpx
+
+from mcfrs_api.config import settings
+from mcfrs_api.services.hydrants import SNAPSHOT, Hydrant, fetch_county_layer, from_county_feature, save_snapshot
+
+
+async def main() -> None:
+    if len(sys.argv) > 1:
+        feats = json.loads(Path(sys.argv[1]).read_text()).get("features", [])
+        hydrants: list[Hydrant] = [h for h in (from_county_feature(f) for f in feats) if h is not None]
+        print(f"read {len(hydrants)} hydrants from {sys.argv[1]}")
+    else:
+        async with httpx.AsyncClient(headers={"User-Agent": "mcfrs-incidents/0.1 (hydrant import)"}) as client:
+            hydrants = await fetch_county_layer(client)
+        print(f"fetched {len(hydrants)} hydrants from the county FeatureServer")
+
+    url = settings().database_url
+    if url:
+        from sqlalchemy import delete
+        from sqlalchemy.ext.asyncio import async_sessionmaker
+
+        from mcfrs_api.db.postgres import make_engine
+        from mcfrs_api.db.schema import HydrantRow
+
+        engine = make_engine(url)
+        now = datetime.now(UTC)
+        async with async_sessionmaker(engine)() as s, s.begin():
+            await s.execute(delete(HydrantRow).where(HydrantRow.source == "mcgov-gis"))
+            s.add_all(
+                HydrantRow(
+                    id=h.id,
+                    latitude=h.latitude,
+                    longitude=h.longitude,
+                    kind=h.kind,
+                    source=h.source,
+                    imported_at=now,
+                    attributes={
+                        "address": h.address,
+                        "city": h.city,
+                        "mainSize": h.main_size,
+                        "outOfService": h.out_of_service,
+                        "verified": h.verified,
+                        "station": h.station,
+                        "notes": h.notes,
+                    },
+                )
+                for h in hydrants
+            )
+        await engine.dispose()
+        print(f"wrote {len(hydrants)} rows to the hydrant table")
+    n = save_snapshot(hydrants)
+    print(f"snapshot: {n} hydrants -> {SNAPSHOT}")
+
+
+asyncio.run(main())

@@ -51,7 +51,7 @@ export default function StationPage({ params }: { params: Promise<{ number: stri
             {[["24 h", v.d1], ["7 d", v.d7], ["30 d", v.d30]].map(([l, c]) => <div key={l} className="bg-bg-1 px-3 py-2"><div className="font-mono text-[18px] tabular-nums">{c}</div><div className="font-mono text-[10px] uppercase text-fg-2">{l} observed</div></div>)}
           </div>
           <Block title="APPARATUS (typical assignment)">
-            <div className="flex flex-wrap gap-1">{(station?.apparatus ?? []).map((u) => <UnitBadge key={u} unit={u.replace(/\?$/, "")} highlight={v.withUnits.some((i) => i.units.some((x) => x.unit === u.replace(/\?$/, "")))} />)}</div>
+            <div className="flex flex-wrap gap-1">{(station?.apparatusParsed ?? []).map((a) => <UnitBadge key={a.unit} unit={a.unit} type={a.type} category={a.category} station={a.station} highlight={v.withUnits.some((i) => i.units.some((x) => x.unit === a.unit))} />)}</div>
             {station?.notes && <p className="mt-1 text-fg-2">{station.notes}</p>}
           </Block>
           <Block title={`ACTIVE CALLS (${v.active.length})`}>{v.active.map((i) => <Row key={i.id} i={i} onClick={() => select(i.id)} />)}{v.active.length === 0 && <p className="text-fg-3">none</p>}</Block>

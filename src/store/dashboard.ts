@@ -2,10 +2,8 @@
 import { useMemo } from "react";
 import { create } from "zustand";
 import type { IncidentWire, SourceHealth } from "@/types/incident";
-import type { PublicConfig } from "@/lib/config";
+import type { PublicConfig, Station, Hospital, Hydrant } from "@/types/reference";
 import { applyFilters, EMPTY_FILTERS, sortIncidents, type Filters, type Preset, type SortMode } from "@/lib/filters";
-import type { Station } from "@/data/stations";
-import type { Hospital } from "@/data/hospitals";
 
 export type MobileView = "list" | "map" | "station";
 export type Theme = "dark" | "light" | "system";
@@ -28,6 +26,8 @@ interface DashboardState {
   config?: PublicConfig;
 
   selectedId?: string;
+  /** Nearest hydrants for the selected incident (from /api/incidents/{id}); empty when not applicable. */
+  selectedHydrants: Hydrant[];
   filters: Filters;
   activePresetId?: string;
   sort: SortMode;
@@ -44,6 +44,7 @@ interface DashboardState {
   setReference(stations: Station[], hospitals: Hospital[]): void;
   setConfig(c: PublicConfig): void;
   select(id?: string): void;
+  setSelectedHydrants(h: Hydrant[]): void;
   setFilters(f: Partial<Filters>): void;
   clearFilters(): void;
   applyPreset(p?: Preset): void;
@@ -64,7 +65,7 @@ function save(k: string, v: unknown) { try { localStorage.setItem(k, JSON.string
 
 export const useDashboard = create<DashboardState>((set, get) => ({
   incidents: [], history: [], freshIds: new Set(), stations: [], hospitals: [],
-  filters: EMPTY_FILTERS, sort: "newest", focusStation: 14, stationMode: false, mobileView: "list", theme: "dark", drawerOpen: false, savedPresets: [],
+  selectedHydrants: [], filters: EMPTY_FILTERS, sort: "newest", focusStation: 14, stationMode: false, mobileView: "list", theme: "dark", drawerOpen: false, savedPresets: [],
 
   setFeed: (incidents, health, serverTime) => {
     const prev = new Set(get().incidents.map((i) => i.id));
@@ -77,7 +78,8 @@ export const useDashboard = create<DashboardState>((set, get) => ({
   setFetchError: (fetchError) => set({ fetchError }),
   setReference: (stations, hospitals) => set({ stations, hospitals }),
   setConfig: (config) => set((s) => ({ config, focusStation: load(LS.focus, config.focusStation) ?? s.focusStation })),
-  select: (selectedId) => set({ selectedId, drawerOpen: Boolean(selectedId) }),
+  select: (selectedId) => set({ selectedId, drawerOpen: Boolean(selectedId), selectedHydrants: [] }),
+  setSelectedHydrants: (selectedHydrants) => set({ selectedHydrants }),
   setFilters: (f) => set((s) => ({ filters: { ...s.filters, ...f }, activePresetId: undefined })),
   clearFilters: () => set({ filters: EMPTY_FILTERS, activePresetId: undefined }),
   applyPreset: (p) => set(p ? { filters: { ...EMPTY_FILTERS, ...p.filters }, activePresetId: p.id } : { filters: EMPTY_FILTERS, activePresetId: undefined }),

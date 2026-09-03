@@ -51,7 +51,7 @@ export default function StationPanel() {
           <div className="border-b border-line px-3 py-2">
             <div className="text-fg-1">{station.address}</div>
             <div className="mt-1 flex flex-wrap gap-1">
-              {station.apparatus.map((u) => <UnitBadge key={u} unit={u.replace(/\?$/, "")} highlight={view.busyUnits.has(u.replace(/\?$/, ""))} />)}
+              {station.apparatusParsed.map((a) => <UnitBadge key={a.unit} unit={a.unit} type={a.type} category={a.category} station={a.station} highlight={view.busyUnits.has(a.unit)} />)}
             </div>
             {view.busyUnits.size > 0 && <div className="mt-1 font-mono text-[11px] text-fg-2">{view.busyUnits.size} of {station.apparatus.length} units on assignments (highlighted)</div>}
           </div>

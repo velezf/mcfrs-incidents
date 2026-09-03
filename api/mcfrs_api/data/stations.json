@@ -1,0 +1,779 @@
+[
+  {
+    "number": 1,
+    "name": "Silver Spring VFD",
+    "address": "8110 Georgia Ave, Silver Spring, MD 20910",
+    "municipality": "Silver Spring",
+    "latitude": 38.99085,
+    "longitude": -77.02713,
+    "battalion": 1,
+    "apparatus": [
+      "PE701",
+      "M701",
+      "A701",
+      "A701B",
+      "DCN701"
+    ]
+  },
+  {
+    "number": 2,
+    "name": "Takoma Park VFD",
+    "address": "7201 Carroll Ave, Takoma Park, MD 20912",
+    "municipality": "Takoma Park",
+    "latitude": 38.97753,
+    "longitude": -77.00725,
+    "battalion": 1,
+    "apparatus": [
+      "PE702",
+      "E702B?",
+      "A702",
+      "A702B?"
+    ]
+  },
+  {
+    "number": 3,
+    "name": "Rockville VFD",
+    "address": "380 Hungerford Dr, Rockville, MD 20850",
+    "municipality": "Rockville",
+    "latitude": 39.08761,
+    "longitude": -77.15081,
+    "battalion": 3,
+    "apparatus": [
+      "PE703",
+      "PE703B",
+      "AT703",
+      "RS703",
+      "M703",
+      "A703",
+      "A703B",
+      "A703C?",
+      "ALS703",
+      "SU703?",
+      "UT703B?",
+      "UT703C?"
+    ]
+  },
+  {
+    "number": 4,
+    "name": "Sandy Spring VFD",
+    "address": "17921 Brooke Rd, Sandy Spring, MD 20860",
+    "municipality": "Sandy Spring",
+    "latitude": 39.15064,
+    "longitude": -77.02716,
+    "battalion": 4,
+    "apparatus": [
+      "PE704",
+      "A704",
+      "W704",
+      "M704?",
+      "ABT704?"
+    ]
+  },
+  {
+    "number": 5,
+    "name": "Kensington VFD (Old Town)",
+    "address": "10620 Connecticut Ave, Kensington, MD 20895",
+    "municipality": "Kensington",
+    "latitude": 39.03004,
+    "longitude": -77.07623,
+    "battalion": 4,
+    "apparatus": [
+      "PE705",
+      "PE705B?",
+      "A705",
+      "A705B",
+      "B705",
+      "CT705",
+      "UT705?",
+      "CH705?",
+      "CH705B?",
+      "AT705?",
+      "ALS705?"
+    ]
+  },
+  {
+    "number": 6,
+    "name": "Bethesda FD",
+    "address": "6600 Wisconsin Ave, Bethesda, MD 20815",
+    "municipality": "Bethesda",
+    "latitude": 38.97677,
+    "longitude": -77.09109,
+    "battalion": 2,
+    "apparatus": [
+      "PE706",
+      "T706",
+      "A706?",
+      "UT706?"
+    ]
+  },
+  {
+    "number": 7,
+    "name": "Chevy Chase FD",
+    "address": "8001 Connecticut Ave, Chevy Chase, MD 20815",
+    "municipality": "Chevy Chase",
+    "latitude": 38.99071,
+    "longitude": -77.07672,
+    "battalion": 2,
+    "apparatus": [
+      "PE707",
+      "A707",
+      "HM707",
+      "UT707?"
+    ],
+    "notes": "Special Operations station: Hazmat Response Team. A/M707 is staffed by Bethesda-Chevy Chase Rescue Squad."
+  },
+  {
+    "number": 8,
+    "name": "Gaithersburg-Washington Grove VFD",
+    "address": "801 Russell Ave, Gaithersburg, MD 20879",
+    "municipality": "Gaithersburg",
+    "latitude": 39.15522,
+    "longitude": -77.20937,
+    "battalion": 3,
+    "apparatus": [
+      "PE708",
+      "PAT708",
+      "M708",
+      "A708",
+      "A708B?",
+      "A708C",
+      "ALS708?",
+      "CT708",
+      "B708",
+      "UT708?",
+      "UT708B?",
+      "UTV708?",
+      "BUTV708?"
+    ]
+  },
+  {
+    "number": 9,
+    "name": "Hyattstown VFD",
+    "address": "25801 Frederick Rd, Clarksburg, MD 20871",
+    "municipality": "Hyattstown",
+    "latitude": 39.28016,
+    "longitude": -77.31447,
+    "battalion": 5,
+    "apparatus": [
+      "PRE709",
+      "RE709B?",
+      "B709",
+      "B709B",
+      "W709",
+      "UT709?",
+      "UTV709?",
+      "A709?"
+    ],
+    "notes": "Frederick Rd (MD 355) at Hyattstown Mill Rd; mailing city is Clarksburg."
+  },
+  {
+    "number": 10,
+    "name": "Cabin John Park VFD",
+    "address": "8001 River Rd, Bethesda, MD 20817",
+    "municipality": "Bethesda",
+    "latitude": 38.99485,
+    "longitude": -77.16388,
+    "battalion": 2,
+    "apparatus": [
+      "PE710",
+      "E710B",
+      "T710",
+      "A710",
+      "ALS710?",
+      "SW710",
+      "SW710B",
+      "UT710?",
+      "B710?"
+    ],
+    "notes": "Special Operations station: Swift Water Rescue Team."
+  },
+  {
+    "number": 11,
+    "name": "Glen Echo FD",
+    "address": "5920 Massachusetts Ave, Bethesda, MD 20816",
+    "municipality": "Bethesda",
+    "latitude": 38.96293,
+    "longitude": -77.12097,
+    "battalion": 2,
+    "apparatus": [
+      "PE711",
+      "A711",
+      "A711B?",
+      "ALS711",
+      "UT711?",
+      "UTV711?",
+      "E711B?"
+    ]
+  },
+  {
+    "number": 12,
+    "name": "Hillandale VFD",
+    "address": "10617 New Hampshire Ave, Silver Spring, MD 20903",
+    "municipality": "Silver Spring",
+    "latitude": 39.03,
+    "longitude": -76.9832,
+    "battalion": 1,
+    "apparatus": [
+      "PE712",
+      "M712",
+      "A712",
+      "BC701",
+      "UT712?",
+      "UTV712?"
+    ],
+    "notes": "Battalion 1 chief quarters here. Coordinate is the OSM/USGS GNIS point (source tag 'USGS Geonames', ~4-decimal precision); it sits between Cresthaven Dr and Chalmers Rd on New Hampshire Ave as the address describes, but treat as +/- ~100 m."
+  },
+  {
+    "number": 13,
+    "name": "Damascus VFD",
+    "address": "26334 Ridge Rd, Damascus, MD 20872",
+    "municipality": "Damascus",
+    "latitude": 39.28915,
+    "longitude": -77.20509,
+    "battalion": 5,
+    "apparatus": [
+      "PE713",
+      "E713B",
+      "BE713",
+      "M713",
+      "A713",
+      "B713",
+      "W713"
+    ]
+  },
+  {
+    "number": 14,
+    "name": "Upper Montgomery County VFD",
+    "address": "19801 Beallsville Rd, Beallsville, MD 20839",
+    "municipality": "Beallsville",
+    "latitude": 39.18022,
+    "longitude": -77.4116,
+    "battalion": 5,
+    "apparatus": [
+      "PRE714",
+      "BE714",
+      "W714",
+      "M714",
+      "A714",
+      "B714",
+      "BT714",
+      "BS714",
+      "BS714B",
+      "SW714?",
+      "CT714",
+      "UT714",
+      "SU714",
+      "UTV714",
+      "CH714",
+      "CH714B"
+    ],
+    "notes": "Special Operations station: Swift Water Rescue Team. Beallsville Rd (MD 109) between Darnestown Rd (MD 28) and Beth Farm Cut Thru; OSM feature 'Upper Montgomery Fire Station 14' and Nominatim agree on the coordinate (39.18022, -77.41160). Roster per the Firefighting Wiki page (snapshot 2026-05-24): Rescue Engine 714 = 2022 Pierce Enforcer 1500/750 (dispatched as PRE714 per Wikipedia; RadioReference shows PE714/RE714); Brush Engine 714 = 2019 Freightliner M2/Rosenbauer 1250/500; Tanker 714 = 2009 Kenworth/4-Guys 3500 gal; Medic 714 = 2018 Freightliner/PL Custom; Ambulance 714 = 2016 Freightliner/PL Custom; Brush 714 = 1996 Ford/Kenco; Boat 714 = 16 ft inflatable with Boat Support 714 and 714B; Canteen 714; Utility 714; Support Unit 714; UTV 714; Chief 714/714B. SW714 appears only in the Wikipedia table (the swift-water boat is listed as Boat 714 elsewhere). Six career MCFRS staff plus volunteers; chartered 1946."
+  },
+  {
+    "number": 15,
+    "name": "Burtonsville VFD",
+    "address": "13900 Old Columbia Pike, Silver Spring, MD 20904",
+    "municipality": "Burtonsville",
+    "latitude": 39.08507,
+    "longitude": -76.95142,
+    "battalion": 1,
+    "apparatus": [
+      "PE715",
+      "PE715B?",
+      "T715",
+      "RS715",
+      "M715",
+      "A715",
+      "B715",
+      "UT715?"
+    ],
+    "notes": "Old Columbia Pike at Briggs Chaney Rd. Nominatim cannot resolve the address; coordinate is the OSM fire-station feature 'Burtonsville Fire Station 15'."
+  },
+  {
+    "number": 16,
+    "name": "Silver Spring VFD (Four Corners)",
+    "address": "111 University Blvd E, Silver Spring, MD 20901",
+    "municipality": "Silver Spring",
+    "latitude": 39.01745,
+    "longitude": -77.00715,
+    "battalion": 1,
+    "apparatus": [
+      "PE716",
+      "T716",
+      "A716",
+      "MAU716?",
+      "AR716?"
+    ]
+  },
+  {
+    "number": 17,
+    "name": "Laytonsville District VFD",
+    "address": "21400 Laytonsville Rd, Laytonsville, MD 20882",
+    "municipality": "Laytonsville",
+    "latitude": 39.20705,
+    "longitude": -77.14166,
+    "battalion": 5,
+    "apparatus": [
+      "PE717",
+      "EW717",
+      "BE717",
+      "RS717",
+      "A717",
+      "B717",
+      "CT717",
+      "W717"
+    ]
+  },
+  {
+    "number": 18,
+    "name": "Kensington VFD (Glenmont)",
+    "address": "12210 Georgia Ave, Silver Spring, MD 20902",
+    "municipality": "Glenmont",
+    "latitude": 39.056,
+    "longitude": -77.05083,
+    "battalion": 4,
+    "apparatus": [
+      "PE718",
+      "AT718",
+      "A718",
+      "CP718?",
+      "EMS704?"
+    ]
+  },
+  {
+    "number": 19,
+    "name": "Silver Spring VFD (Montgomery Hills)",
+    "address": "1945 Seminary Rd, Silver Spring, MD 20910",
+    "municipality": "Silver Spring",
+    "latitude": 39.00903,
+    "longitude": -77.04215,
+    "battalion": 1,
+    "apparatus": [
+      "PE719",
+      "AT719",
+      "A719?",
+      "EMS701?"
+    ]
+  },
+  {
+    "number": 20,
+    "name": "Bethesda FD (Midtown Bethesda)",
+    "address": "9041 Old Georgetown Rd, Bethesda, MD 20814",
+    "municipality": "Bethesda",
+    "latitude": 39.0042,
+    "longitude": -77.1101,
+    "battalion": 2,
+    "apparatus": [
+      "PE720",
+      "BC702"
+    ],
+    "notes": "Special Operations station (Hazmat Response Team). Battalion 2 chief quarters here. Old Georgetown Rd at W Cedar Ln, opposite NIH."
+  },
+  {
+    "number": 21,
+    "name": "Kensington VFD (Veirs Mill Village)",
+    "address": "12500 Veirs Mill Rd, Rockville, MD 20853",
+    "municipality": "Rockville",
+    "latitude": 39.06139,
+    "longitude": -77.09257,
+    "battalion": 4,
+    "apparatus": [
+      "PE721",
+      "A721"
+    ],
+    "notes": "Bays face Gaynor Rd."
+  },
+  {
+    "number": 22,
+    "name": "MCFRS Kingsview Station",
+    "address": "18910 Germantown Rd, Germantown, MD 20874",
+    "municipality": "Germantown",
+    "latitude": 39.16172,
+    "longitude": -77.28404,
+    "battalion": 5,
+    "apparatus": [
+      "PE722",
+      "BE722",
+      "A722",
+      "B722",
+      "W722",
+      "MAB722",
+      "MCSU722?"
+    ],
+    "notes": "County-operated (no LFRD). MAB = Medical Ambulance Bus."
+  },
+  {
+    "number": 23,
+    "name": "Rockville VFD (Twinbrook)",
+    "address": "121 Rollins Ave, Rockville, MD 20852",
+    "municipality": "Rockville",
+    "latitude": 39.05892,
+    "longitude": -77.12291,
+    "battalion": 3,
+    "apparatus": [
+      "PE723",
+      "AT723",
+      "M723",
+      "A723"
+    ],
+    "notes": "Special Operations station: Emergency Response Team (ERT)."
+  },
+  {
+    "number": 24,
+    "name": "Hillandale VFD (Colesville)",
+    "address": "13216 New Hampshire Ave, Silver Spring, MD 20904",
+    "municipality": "Colesville",
+    "latitude": 39.07304,
+    "longitude": -77.00325,
+    "battalion": 1,
+    "apparatus": [
+      "PE724",
+      "E724B?",
+      "AT724",
+      "A724",
+      "A724B?",
+      "B724"
+    ]
+  },
+  {
+    "number": 25,
+    "name": "Kensington VFD (Aspen Hill)",
+    "address": "14401 Connecticut Ave, Silver Spring, MD 20906",
+    "municipality": "Aspen Hill",
+    "latitude": 39.09219,
+    "longitude": -77.06915,
+    "battalion": 4,
+    "apparatus": [
+      "PE725",
+      "PT725",
+      "A725",
+      "A725B?",
+      "M725?",
+      "BC704",
+      "EMS704?",
+      "SU725?",
+      "BT725",
+      "BS725?"
+    ],
+    "notes": "Special Operations station: Hazmat and Technical Rescue Team. Battalion 4 chief quarters here. Wikipedia lists the aerial as PT725 (paramedic tower); RadioReference as T725."
+  },
+  {
+    "number": 26,
+    "name": "Bethesda FD (North Bethesda)",
+    "address": "6700 Democracy Blvd, Bethesda, MD 20817",
+    "municipality": "Bethesda",
+    "latitude": 39.02106,
+    "longitude": -77.13765,
+    "battalion": 2,
+    "apparatus": [
+      "PE726",
+      "A726",
+      "MAB726",
+      "MCSU726?"
+    ],
+    "notes": "A/M726 is staffed by Bethesda-Chevy Chase Rescue Squad."
+  },
+  {
+    "number": 27,
+    "name": "Public Safety Training Academy",
+    "address": "8751 Snouffer School Rd, Gaithersburg, MD 20879",
+    "municipality": "Gaithersburg",
+    "latitude": 39.17763,
+    "longitude": -77.17688,
+    "apparatus": [
+      "E727",
+      "E727B?",
+      "T727?",
+      "CP727?"
+    ],
+    "notes": "Training academy, not a first-due station; no battalion. Address is the current PSTA (opened 2015), geocoded via Nominatim (OSM feature 'Montgomery County Public Safety Training Academy'). RadioReference still lists the former academy at 9710 Great Seneca Hwy, Rockville — do not use that."
+  },
+  {
+    "number": 28,
+    "name": "Gaithersburg-Washington Grove VFD (Derwood)",
+    "address": "7272 Muncaster Mill Rd, Derwood, MD 20855",
+    "municipality": "Derwood",
+    "latitude": 39.14797,
+    "longitude": -77.14689,
+    "battalion": 3,
+    "apparatus": [
+      "PE728",
+      "A728",
+      "HM728"
+    ],
+    "notes": "Special Operations station: Hazmat Response Team. Muncaster Mill Rd at Shady Grove Rd. Nominatim cannot resolve the address; coordinate is the OSM feature 'Gaithersburg Fire Station 28'."
+  },
+  {
+    "number": 29,
+    "name": "Germantown VFD",
+    "address": "20001 Crystal Rock Dr, Germantown, MD 20874",
+    "municipality": "Germantown",
+    "latitude": 39.18511,
+    "longitude": -77.26333,
+    "battalion": 5,
+    "apparatus": [
+      "PE729",
+      "PE729B",
+      "RS729",
+      "M729",
+      "A729",
+      "A729B?",
+      "BT729",
+      "SU729?",
+      "BS729?"
+    ],
+    "notes": "Technical Rescue Team station."
+  },
+  {
+    "number": 30,
+    "name": "Cabin John Park VFD (Potomac)",
+    "address": "9404 Falls Rd, Potomac, MD 20854",
+    "municipality": "Potomac",
+    "latitude": 39.01024,
+    "longitude": -77.2202,
+    "battalion": 2,
+    "apparatus": [
+      "PE730",
+      "A730",
+      "M730?",
+      "W730",
+      "B730",
+      "SW730",
+      "SW730B",
+      "UT730?",
+      "ABT730?"
+    ],
+    "notes": "Special Operations station: Swift Water Rescue Team."
+  },
+  {
+    "number": 31,
+    "name": "Rockville VFD (Quince Orchard / Darnestown)",
+    "address": "12100 Darnestown Rd, Gaithersburg, MD 20878",
+    "municipality": "North Potomac",
+    "latitude": 39.11656,
+    "longitude": -77.25051,
+    "battalion": 3,
+    "apparatus": [
+      "PE731",
+      "T731",
+      "M731",
+      "W731",
+      "BT731",
+      "TR700",
+      "TR700B?",
+      "SU731?",
+      "UT731?",
+      "UTV731?",
+      "BS731?"
+    ],
+    "notes": "Special Operations station: Technical Rescue Team (TR700)."
+  },
+  {
+    "number": 32,
+    "name": "MCFRS Travilah Station",
+    "address": "9615 Darnestown Rd, Rockville, MD 20850",
+    "municipality": "Rockville",
+    "latitude": 39.09381,
+    "longitude": -77.1972,
+    "battalion": 3,
+    "apparatus": [
+      "PE732",
+      "A732",
+      "M732?",
+      "BC703",
+      "EMS703",
+      "SA700",
+      "DC700",
+      "CP732?"
+    ],
+    "notes": "County-operated. Battalion 3 chief, EMS duty officer, safety officer and duty operations chief quarter here. Darnestown Rd at Shady Grove Rd."
+  },
+  {
+    "number": 33,
+    "name": "Rockville VFD (Potomac)",
+    "address": "11430 Falls Rd, Potomac, MD 20854",
+    "municipality": "Potomac",
+    "latitude": 39.0439,
+    "longitude": -77.19369,
+    "battalion": 3,
+    "apparatus": [
+      "PE733",
+      "A733",
+      "A733B?",
+      "B733",
+      "CT733",
+      "MAU733?",
+      "AR733?"
+    ]
+  },
+  {
+    "number": 34,
+    "name": "MCFRS Milestone Station",
+    "address": "20633 Boland Farm Rd, Germantown, MD 20876",
+    "municipality": "Germantown",
+    "latitude": 39.19448,
+    "longitude": -77.24474,
+    "battalion": 5,
+    "apparatus": [
+      "PE734",
+      "T734",
+      "A734",
+      "BC705",
+      "EMS705?",
+      "DCN734"
+    ],
+    "notes": "County-operated. Battalion 5 chief quarters here. Wikipedia lists the aerial as T734; RadioReference as AT734."
+  },
+  {
+    "number": 35,
+    "name": "MCFRS Clarksburg Station",
+    "address": "23420 Frederick Rd, Clarksburg, MD 20871",
+    "municipality": "Clarksburg",
+    "latitude": 39.24063,
+    "longitude": -77.28188,
+    "battalion": 5,
+    "apparatus": [
+      "PE735",
+      "AT735",
+      "A735",
+      "W735",
+      "M735?"
+    ],
+    "notes": "County-operated. Permanent station opened 2024-11-01 (county press release Item_ID=46097); coordinate is the Nominatim address point for 23420 Frederick Rd, next to the 23400 Frederick Rd building — accuracy ~100 m, not yet mapped as a fire station in OSM. The former temporary quarters at 22610 Gateway Center Dr (39.23258, -77.28119) are still what OSM and RadioReference show; do not use them."
+  },
+  {
+    "number": 40,
+    "name": "Sandy Spring VFD (Olney)",
+    "address": "16911 Georgia Ave, Olney, MD 20832",
+    "municipality": "Olney",
+    "latitude": 39.13403,
+    "longitude": -77.06924,
+    "battalion": 4,
+    "apparatus": [
+      "PE740",
+      "AT740",
+      "A740",
+      "B740",
+      "BT740",
+      "CT740",
+      "UT740?",
+      "UTV740?",
+      "BUTV740?"
+    ],
+    "notes": "Wikipedia lists PE740/AT740; RadioReference lists E740, E740B, T740."
+  },
+  {
+    "number": 41,
+    "name": "Bethesda-Chevy Chase Rescue Squad (Rescue 1)",
+    "address": "5020 Battery Ln, Bethesda, MD 20814",
+    "municipality": "Bethesda",
+    "latitude": 38.99047,
+    "longitude": -77.10286,
+    "battalion": 2,
+    "apparatus": [
+      "RS741",
+      "RS741B",
+      "M741",
+      "A741B",
+      "A741C",
+      "A741D",
+      "ALS741",
+      "UT741?"
+    ],
+    "notes": "Rescue Company 1; unit suffix 741. Also staffs A/M707 and A/M726."
+  },
+  {
+    "number": 42,
+    "name": "Wheaton Volunteer Rescue Squad (Rescue 2)",
+    "address": "2400 Arcola Ave, Silver Spring, MD 20902",
+    "municipality": "Wheaton",
+    "latitude": 39.0467,
+    "longitude": -77.05145,
+    "battalion": 4,
+    "apparatus": [
+      "RS742",
+      "RS742B",
+      "A742",
+      "A742B",
+      "A742C",
+      "A742D?",
+      "ALS742",
+      "ALS742B",
+      "UT742?",
+      "UTV742?",
+      "SU742?"
+    ],
+    "notes": "Rescue Company 2; unit suffix 742. Arcola Ave at Georgia Ave."
+  },
+  {
+    "number": 50,
+    "name": "Walter Reed National Military Medical Center FD (federal)",
+    "address": "8901 Rockville Pike, Bethesda, MD 20889",
+    "municipality": "Bethesda",
+    "latitude": 39.00259,
+    "longitude": -77.09151,
+    "apparatus": [
+      "E750",
+      "E750B?",
+      "M750?"
+    ],
+    "notes": "Federal (Naval Support Activity Bethesda) department dispatched on the MCFRS system; not an MCFRS station. Firehouse is at the SW corner of Taylor Rd and E Palmer Rd on the campus (OSM 'Station 50')."
+  },
+  {
+    "number": 51,
+    "name": "National Institutes of Health FD (federal)",
+    "address": "51 Center Dr, Bethesda, MD 20892",
+    "municipality": "Bethesda",
+    "latitude": 39.00348,
+    "longitude": -77.10879,
+    "apparatus": [
+      "E751",
+      "AT751?",
+      "HM751?",
+      "A751?"
+    ],
+    "notes": "Federal department on the NIH campus, dispatched on the MCFRS system; not an MCFRS station. Coordinate is OSM 'Station 51' (tagged 201 Center Dr); RadioReference gives 51 Center Dr."
+  },
+  {
+    "number": 52,
+    "name": "Naval Surface Warfare Center Carderock FD (federal)",
+    "address": "9500 MacArthur Blvd, Bethesda, MD 20817",
+    "municipality": "Bethesda",
+    "latitude": 38.97745,
+    "longitude": -77.19577,
+    "apparatus": [
+      "E752"
+    ],
+    "notes": "Federal department, dispatched on the MCFRS system; not an MCFRS station."
+  },
+  {
+    "number": 53,
+    "name": "National Institute of Standards and Technology FD (federal)",
+    "address": "100 Bureau Dr, Gaithersburg, MD 20899",
+    "municipality": "Gaithersburg",
+    "latitude": 39.13573,
+    "longitude": -77.22197,
+    "apparatus": [
+      "E753",
+      "A753?",
+      "HM753?",
+      "B753?"
+    ],
+    "notes": "Federal department on the NIST campus, dispatched on the MCFRS system; not an MCFRS station. Coordinate is OSM 'NIST Station 53'; RadioReference gives 39.133672/-77.221980 (~200 m south)."
+  },
+  {
+    "number": 54,
+    "name": "Fort Detrick FD, Forest Glen Annex (federal)",
+    "address": "609 Stephen Sitter Ave, Silver Spring, MD 20910",
+    "municipality": "Silver Spring",
+    "latitude": 39.00299,
+    "longitude": -77.05332,
+    "apparatus": [
+      "E754",
+      "E754B?",
+      "HM754?",
+      "SU754?"
+    ],
+    "notes": "Federal department (Forest Glen Annex, formerly Walter Reed Forest Glen), dispatched on the MCFRS system; not an MCFRS station."
+  }
+]

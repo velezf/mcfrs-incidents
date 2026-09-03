@@ -39,7 +39,7 @@ function IncidentCardInner({ incident: i, selected, fresh, focusStation, now, on
         {i.stationArea !== undefined && <span className="shrink-0 font-mono text-[11px] text-fg-3">A{i.stationArea}</span>}
       </div>
       <div className="mt-1 flex flex-wrap items-center gap-1">
-        {i.units.slice(0, 8).map((u) => <UnitBadge key={u.unit} unit={u.unit} highlight={unitStation(u.unit) === focusStation} link={false} />)}
+        {i.units.slice(0, 8).map((u) => <UnitBadge key={u.unit} unit={u.unit} type={u.type} category={u.category} station={u.station} highlight={(u.station ?? unitStation(u.unit)) === focusStation} link={false} />)}
         {i.units.length > 8 && <span className="font-mono text-[10px] text-fg-3">+{i.units.length - 8}</span>}
         <span className="ml-auto font-mono text-[10px] text-fg-3">{i.units.length}u{i.talkgroup ? ` · ${i.talkgroup}` : i.channel ? ` · ${i.channel}` : ""}</span>
       </div>

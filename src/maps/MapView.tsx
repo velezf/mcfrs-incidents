@@ -23,6 +23,7 @@ function incidentIcon(i: IncidentWire, selected: boolean): L.DivIcon {
 function stationIcon(n: number, focus: boolean, busy: boolean): L.DivIcon {
   return L.divIcon({ className: "", html: `<div class="marker-station ${focus ? "focus" : ""} ${busy ? "busy" : ""}">${n}</div>`, iconSize: [22, 22], iconAnchor: [11, 11], popupAnchor: [0, -12] });
 }
+const hydrantIcon = (n: number) => L.divIcon({ className: "", html: `<div class="marker-hydrant">${n}</div>`, iconSize: [16, 16], iconAnchor: [8, 8], popupAnchor: [0, -9] });
 const hospitalIcon = L.divIcon({ className: "", html: `<div class="marker-hospital">H</div>`, iconSize: [18, 18], iconAnchor: [9, 9], popupAnchor: [0, -10] });
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c] as string));
 
@@ -32,6 +33,7 @@ export default function MapView({ fitOnce = true, interactive = true }: { fitOnc
   const cluster = useRef<L.MarkerClusterGroup | null>(null);
   const stationLayer = useRef<L.LayerGroup | null>(null);
   const hospitalLayer = useRef<L.LayerGroup | null>(null);
+  const hydrantLayer = useRef<L.LayerGroup | null>(null);
   const markers = useRef(new Map<string, L.Marker>());
   const fitted = useRef(false);
 
@@ -42,6 +44,7 @@ export default function MapView({ fitOnce = true, interactive = true }: { fitOnc
   const selectedId = useDashboard((s) => s.selectedId);
   const focus = useDashboard((s) => s.focusStation);
   const stationMode = useDashboard((s) => s.stationMode);
+  const selectedHydrants = useDashboard((s) => s.selectedHydrants);
   const select = useDashboard((s) => s.select);
 
   // create once
@@ -56,6 +59,7 @@ export default function MapView({ fitOnce = true, interactive = true }: { fitOnc
     m.addLayer(cluster.current);
     stationLayer.current = L.layerGroup().addTo(m);
     hospitalLayer.current = L.layerGroup().addTo(m);
+    hydrantLayer.current = L.layerGroup().addTo(m);
     map.current = m;
     const ro = new ResizeObserver(() => m.invalidateSize());
     ro.observe(el.current);
@@ -129,6 +133,16 @@ export default function MapView({ fitOnce = true, interactive = true }: { fitOnc
     const mk = markers.current.get(selectedId);
     if (mk) setTimeout(() => { try { cluster.current?.zoomToShowLayer(mk, () => mk.openPopup()); } catch { mk.openPopup(); } }, 650);
   }, [selectedId, all]);
+
+  // nearest hydrants for the selected fire incident
+  useEffect(() => {
+    const layer = hydrantLayer.current; if (!layer) return;
+    layer.clearLayers();
+    selectedHydrants.forEach((h, n) => {
+      layer.addLayer(L.marker([h.latitude, h.longitude], { icon: hydrantIcon(n + 1), zIndexOffset: 400 })
+        .bindPopup(`<b>Hydrant</b> ${esc(h.address ?? "")}<br>${h.distanceFt.toLocaleString()} ft straight-line${h.mainSize ? ` · ${esc(h.mainSize)}" main` : ""}${h.outOfService ? " · <b>OUT OF SERVICE</b>" : ""}`));
+    });
+  }, [selectedHydrants]);
 
   // station mode: frame the focus station
   useEffect(() => {

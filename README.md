@@ -2,8 +2,9 @@
 
 Real-time situational awareness for Montgomery County (MD) Fire and Rescue
 Service incidents: an operations-center style map + list, station and
-apparatus awareness, filtering, history, and alerting. Inspired by the old
-MCFRS "Active Incidents" web pager, built to be substantially more capable.
+apparatus awareness, nearest hydrants for fire calls, filtering, history and
+analytics, alerting (planned). Inspired by the old MCFRS "Active Incidents"
+web pager, built to be substantially more capable.
 
 Not affiliated with Montgomery County or MCFRS. Data shown is whatever the
 configured upstream source publishes; analytics are derived from the feed as
@@ -13,74 +14,91 @@ observed by this instance, not the official record of all incidents.
 
 ```
 Everbridge / CAD source  →  Source Adapter  →  Incident Normalizer  →  Change Detection
-        →  PostgreSQL (phase 2)  →  WebSocket / SSE (phase 4)  →  Clients
+        →  PostgreSQL  →  Server-Sent Events  →  Browsers
+                 (Python / FastAPI)                (Next.js / React / Leaflet)
 ```
 
-- **One normalized model** (`src/types/incident.ts`). The UI never sees a
-  source-specific shape.
-- **Adapters** (`src/adapters/`) own everything upstream-specific and run
-  server-side only. `mock` is a full simulated feed; `everbridge` is a stub
-  until the sanitized cURL capture is analysed (phase 3). Others (Active911,
-  RSS/JSON, a future CAD feed, a radio/talkgroup source from the sibling
-  `mcfrs-scanner` project) slot in behind the same interface.
-- **Browsers never poll upstream.** The server polls once (no overlap,
-  exponential backoff, honest source health) and serves clients.
-- **Privacy is applied on the server** before data reaches a public browser
-  (`src/lib/privacy.ts`, `PRIVACY_MODE`, `MASK_MEDICAL_ADDRESSES`,
-  `PUBLIC_MAP_ADDRESS_PRECISION`).
-- **Secrets stay server-side.** `src/lib/config.ts` is the only reader of the
-  environment; `publicConfig()` is the only thing exported to the client.
-
-## Stack
-
-Next.js (App Router) · React · TypeScript (strict) · Tailwind · Leaflet +
-OpenStreetMap (no proprietary map service) · Zustand · Zod · Vitest.
-PostgreSQL + Prisma arrive in phase 2. Docker in phase 2.
+- **Backend `api/` (Python 3.12, FastAPI, SQLAlchemy 2, Alembic, PostgreSQL).**
+  One process polls ONE adapter (no overlap, exponential backoff, honest
+  source health), normalizes into the canonical model
+  (`api/mcfrs_api/models.py`), detects new/changed/closed incidents, stores
+  everything (an incident that leaves the upstream list is *closed*, never
+  deleted), applies privacy transforms server-side, and serves `/api/*` plus
+  an SSE stream. Adapters: `mock` (19 fictional-address fixtures and a seeded
+  live simulation), `everbridge` (stub until the sanitized request capture
+  is analysed). Stations, hospitals and the county hydrant layer are
+  reference data.
+- **Frontend `src/` (Next.js, React, TypeScript, Tailwind, Leaflet +
+  OpenStreetMap).** A thin consumer of the API: three-pane dashboard (list |
+  map | Station N mode or incident drawer), filters/presets/search, station
+  and unit pages, history + analytics, dark/light/system themes, mobile
+  LIST | MAP | STATION, PWA manifest. Next forwards `/api/*` to the Python
+  service, so no upstream secret ever reaches a browser.
 
 ## Run locally
 
 ```bash
 cp .env.example .env
+docker compose up -d db                      # PostgreSQL
+
+cd api
+uv sync --extra dev
+uv run alembic upgrade head
+uv run bin/import-hydrants                   # optional: 27k county hydrants (a minute)
+uv run uvicorn mcfrs_api.app:app --reload --port 8000
+# tests: uv run pytest -q   lint: uv run ruff check .
+
+cd ..
 npm install
-npm run dev        # http://localhost:3000, mock feed
-npm test           # vitest
-npm run typecheck
-npm run lint
+npm run dev                                  # http://localhost:3000
+# tests: npm test   typecheck: npm run typecheck   lint: npm run lint
 ```
+
+Without `DATABASE_URL` the API runs in memory (history lost on restart).
+`docker compose up -d --build` runs db + api + web together.
 
 ## Layout
 
 ```
+api/mcfrs_api/
+  models.py        canonical incident model (mirrors the frontend wire types)
+  adapters/        base contract, registry (INCIDENT_SOURCE), mock, everbridge stub
+  parsers/         unit nomenclature (configurable table), call-type rules
+  services/        incident_service (poll loop, health), change_detection, privacy, timeline, hydrants
+  db/              repository contract, memory + postgres implementations, schema, factory (DATABASE_URL)
+  routes/api.py    /api/config health stations incidents incidents/{id} history analytics hydrants events(SSE) admin
+  reference.py     stations + hospitals from data/*.json (provenance in data/README.md)
+api/alembic/       migrations          api/tests/   pytest        api/bin/import-hydrants
 src/
-  adapters/    source adapters (mock, everbridge stub) + the SourceAdapter contract
-  app/         routes: / dashboard, /stations/[n], /units/[u], /history, /comms, /ops, /admin, /api/*
-  components/  UI
-  data/        MCFRS stations and hospitals (public reference data, sourced in-file)
-  lib/         config, privacy, geo, filters/search/presets, categories, formatting
-  maps/        Leaflet map
-  parsers/     unit nomenclature (configurable) and call-type classification
-  services/    incident service (poll loop, change detection, health), timeline
-  store/       client state
-  types/       the canonical incident model
+  app/             / dashboard, /stations/[n], /units/[u], /history, /comms /ops /admin (placeholders)
+  components/ maps/ store/ lib/ types/
 ```
 
 ## Build sequence
 
-1. **UI on mock data** — list, map, stations, filters, drawer, Station N
-   mode, responsive. ← current
-2. Normalized storage + history (PostgreSQL / Prisma), Docker.
-3. Everbridge adapter from the sanitized cURL capture. What the capture must
-   answer is listed in `src/adapters/everbridge/index.ts`.
-4. Live updates (SSE) + change detection to clients.
-5. Alerts, history/analytics screens, PWA polish, operations-board mode,
-   admin/debug page.
+1. UI on mock data — done.
+2. Normalized storage + history + analytics + Docker — done (PostgreSQL via
+   SQLAlchemy/Alembic; Docker Compose for db + api + web).
+3. Everbridge adapter from the sanitized request capture. What the capture
+   must answer is listed in `api/mcfrs_api/adapters/everbridge.py`.
+4. Live updates: the SSE endpoint exists; the frontend still polls every
+   few seconds and switches to SSE next.
+5. Alerts, ops-board mode, communications view, admin page UI, PWA polish.
+
+## Hydrants
+
+The county publishes every hydrant (27,351 points; WSSC, MCFRS and municipal)
+as an ArcGIS layer. `bin/import-hydrants` loads it. For fire-type calls the
+incident detail includes the five nearest hydrants within a mile as
+straight-line distances, and the map marks them. This is a starting point
+for the first-due engine, not a substitute for the water-supply officer;
+rural areas (much of the Station 14 first-due) may show none.
 
 ## Hosting
 
-The app needs a server process (polling, secrets, database), so a
-static host such as GitHub Pages cannot run it. Targets: a small VPS,
-Fly.io, Railway, Render, or a Raspberry Pi behind a Cloudflare Tunnel on a
-custom domain.
+Needs a server process and a database, so a static host such as GitHub Pages
+cannot run it. Targets: a small VPS, Fly.io, Railway, Render, or a Raspberry
+Pi behind a Cloudflare Tunnel on a custom domain.
 
 ## Station 14
 

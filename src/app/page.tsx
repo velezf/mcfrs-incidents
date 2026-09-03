@@ -1,6 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useDashboard } from "@/store/dashboard";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 import TopBar from "@/components/TopBar";
 import FilterBar from "@/components/FilterBar";
 import IncidentList from "@/components/IncidentList";
@@ -21,6 +22,7 @@ export default function Dashboard() {
   const focus = useDashboard((s) => s.focusStation);
   const search = useDashboard((s) => s.filters.search);
   const setFilters = useDashboard((s) => s.setFilters);
+  const isMobile = useMediaQuery("(max-width: 767px)");
 
   return (
     <div className="flex h-full min-h-0 flex-col">
@@ -41,7 +43,7 @@ export default function Dashboard() {
         <div className={`${mobileView === "station" ? "flex" : "hidden"} w-full flex-col bg-bg-1 md:flex md:w-[360px] lg:w-[400px] shrink-0 ${!stationMode && !drawerOpen ? "md:hidden" : ""}`}>
           {drawerOpen ? <IncidentDrawer /> : stationMode ? <StationPanel /> : null}
         </div>
-        {drawerOpen && mobileView !== "station" && <div className="absolute inset-0 z-[1000] md:hidden bg-bg-1"><IncidentDrawer /></div>}
+        {isMobile && drawerOpen && mobileView !== "station" && <div className="absolute inset-0 z-[1000] bg-bg-1"><IncidentDrawer /></div>}
       </main>
     </div>
   );

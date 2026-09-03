@@ -7,7 +7,7 @@ import { categoryStyle, STATUS_LABEL } from "@/lib/categories";
 import { elapsed, hhmmss } from "@/lib/format";
 import { formatMiles, hasLocation, haversineKm, nearest } from "@/lib/geo";
 import { unitStation, isMajor } from "@/lib/filters";
-import { parseUnit } from "@/parsers/unit";
+import type { Hydrant } from "@/types/reference";
 import CategoryBadge from "./CategoryBadge";
 import UnitBadge from "./UnitBadge";
 
@@ -21,13 +21,16 @@ export default function IncidentDrawer() {
   const all = useDashboard((s) => s.incidents);
   const focus = useDashboard((s) => s.focusStation);
   const [timeline, setTimeline] = useState<TimelineWire[]>([]);
+  const [hydrantNote, setHydrantNote] = useState<string>("");
+  const hydrants = useDashboard((s) => s.selectedHydrants);
+  const setSelectedHydrants = useDashboard((s) => s.setSelectedHydrants);
   const now = useNow(1000);
   useEffect(() => {
     if (!i) return;
     let stop = false;
-    fetch(`/api/incidents/${encodeURIComponent(i.id)}`, { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).then((d) => { if (!stop && d) setTimeline(d.timeline); }).catch(() => {});
+    fetch(`/api/incidents/${encodeURIComponent(i.id)}`, { cache: "no-store" }).then((r) => (r.ok ? r.json() : null)).then((d) => { if (!stop && d) { setTimeline(d.timeline); setSelectedHydrants((d.hydrants?.nearest ?? []) as Hydrant[]); setHydrantNote(d.hydrants?.note ?? ""); } }).catch(() => {});
     return () => { stop = true; };
-  }, [i?.id, i?.updatedAt, i?.status, i]);
+  }, [i?.id, i?.updatedAt, i?.status, i, setSelectedHydrants]);
 
   const intel = useMemo(() => {
     if (!i || !hasLocation(i)) return null;
@@ -71,12 +74,29 @@ export default function IncidentDrawer() {
           {mapsLink && <KV k="map" v={<a href={mapsLink} target="_blank" rel="noreferrer" className="text-accent hover:underline">open in OpenStreetMap ↗</a>} />}
         </Section>
         <Section title={`UNITS (${i.units.length}) — CAD assignment, not GPS position`}>
-          <div className="flex flex-wrap gap-1">{i.units.map((u) => <UnitBadge key={u.unit} unit={u.unit} status={u.status} highlight={unitStation(u.unit) === focus} />)}</div>
+          <div className="flex flex-wrap gap-1">{i.units.map((u) => <UnitBadge key={u.unit} unit={u.unit} type={u.type} category={u.category} station={u.station} status={u.status} highlight={(u.station ?? unitStation(u.unit)) === focus} />)}</div>
           <ul className="mt-2 space-y-0.5 font-mono text-[11px] text-fg-1">
-            {i.units.map((u) => { const p = parseUnit(u.unit); return <li key={u.unit} className="flex gap-2"><span className="w-14 text-fg">{u.unit}</span><span className="w-32 truncate">{p.type}</span><span className="text-fg-2">{p.station ? `Sta ${p.station}` : ""}</span>{u.dispatchedAt && <span className="ml-auto text-fg-3">{hhmmss(u.dispatchedAt)}</span>}</li>; })}
+            {i.units.map((u) => <li key={u.unit} className="flex gap-2"><span className="w-14 text-fg">{u.unit}</span><span className="w-32 truncate">{u.type ?? "—"}</span><span className="text-fg-2">{u.station ? `Sta ${u.station}` : ""}</span>{u.dispatchedAt && <span className="ml-auto text-fg-3">{hhmmss(u.dispatchedAt)}</span>}</li>)}
           </ul>
           {stationsInvolved.length > 0 && <div className="mt-2 text-fg-2">stations: {stationsInvolved.map((n) => <Link key={n} href={`/stations/${n}`} className="mr-1 font-mono text-accent hover:underline">{n}</Link>)}</div>}
         </Section>
+        {(hydrants.length > 0 || hydrantNote) && (
+          <Section title="WATER SUPPLY — nearest hydrants (straight-line)">
+            {hydrants.length === 0 && <p className="text-fg-3">{hydrantNote || "none within the search radius"}</p>}
+            <ol className="font-mono text-[11px]">
+              {hydrants.map((h, n) => (
+                <li key={h.id} className="flex items-center gap-2 py-0.5">
+                  <span className="w-4 text-fg-3">{n + 1}</span>
+                  <span className="w-14 text-right text-[var(--cat-water)]">{h.distanceFt.toLocaleString()} ft</span>
+                  <span className="min-w-0 truncate text-fg-1">{h.address ?? `${h.latitude.toFixed(5)}, ${h.longitude.toFixed(5)}`}</span>
+                  {h.mainSize && <span className="text-fg-2">{`${h.mainSize}"`} main</span>}
+                  {h.outOfService && <span className="text-bad">OOS</span>}
+                </li>
+              ))}
+            </ol>
+            {hydrants.length > 0 && <p className="mt-1 text-[10px] text-fg-3">County GIS hydrant layer · not a substitute for the water-supply officer</p>}
+          </Section>
+        )}
         <Section title="COMMUNICATIONS">
           <KV k="talkgroup" v={i.talkgroup ?? "not provided by source"} mono />
           <KV k="channel" v={i.channel ?? "not provided by source"} mono />

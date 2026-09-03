@@ -44,8 +44,10 @@ export interface UnitAssignment {
   unit: string;
   /** Home station inferred from the designator (parsers/unit.ts), when derivable. */
   station?: number;
-  /** Apparatus type label, e.g. "Paramedic Engine" (configurable nomenclature). */
+  /** Apparatus type label, e.g. "Paramedic Engine" (nomenclature lives in the API). */
   type?: string;
+  /** engine | truck | rescue | ambulance | medic | chief | command | special | support | unknown */
+  category?: string;
   dispatchedAt?: Date;
   /** Unit-level status if the source provides one ("dispatched", "enroute", "onscene", ...). */
   status?: string;

@@ -32,6 +32,9 @@ const schema = z.object({
   MOCK_SPAWN_SECONDS: z.coerce.number().int().min(5).default(45),
   MOCK_SPEED: z.coerce.number().min(0.1).max(100).default(1),
 
+  // PostgreSQL. Unset = in-memory storage (history lost on restart).
+  DATABASE_URL: z.string().optional(),
+
   // Admin/debug page protection (phase 5 hardens this; a shared token is the floor).
   ADMIN_TOKEN: z.string().optional(),
 });
@@ -44,7 +47,7 @@ export function config(): Config {
   return cached;
 }
 
-const SECRET_KEYS: (keyof Config)[] = ["EVERBRIDGE_AUTH_TOKEN", "EVERBRIDGE_EXTRA_HEADERS", "ADMIN_TOKEN"];
+const SECRET_KEYS: (keyof Config)[] = ["EVERBRIDGE_AUTH_TOKEN", "EVERBRIDGE_EXTRA_HEADERS", "ADMIN_TOKEN", "DATABASE_URL"];
 
 /** Config with secrets replaced, safe for the admin page and logs. */
 export function describeConfig(): Record<string, string> {

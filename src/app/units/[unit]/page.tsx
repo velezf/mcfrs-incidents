@@ -2,7 +2,7 @@
 import { use, useMemo } from "react";
 import Link from "next/link";
 import { useDashboard } from "@/store/dashboard";
-import { parseUnit } from "@/parsers/unit";
+import { unitStation } from "@/lib/filters";
 import { hhmmss } from "@/lib/format";
 import TopBar from "@/components/TopBar";
 import CategoryBadge from "@/components/CategoryBadge";
@@ -10,9 +10,11 @@ import CategoryBadge from "@/components/CategoryBadge";
 export default function UnitPage({ params }: { params: Promise<{ unit: string }> }) {
   const { unit: raw } = use(params);
   const unit = decodeURIComponent(raw).toUpperCase();
-  const p = parseUnit(unit);
   const incidents = useDashboard((s) => s.incidents);
   const history = useDashboard((s) => s.history);
+  const known = useDashboard((s) => [...s.incidents, ...s.history].flatMap((i) => i.units).find((u) => u.unit.toUpperCase() === unit));
+  const apparatus = useDashboard((s) => s.stations.flatMap((x) => x.apparatusParsed).find((a) => a.unit.toUpperCase() === unit));
+  const p = { station: known?.station ?? apparatus?.station ?? unitStation(unit), type: known?.type ?? apparatus?.type ?? "unit", category: known?.category ?? apparatus?.category ?? "unknown", known: Boolean(known?.type ?? apparatus) };
   const station = useDashboard((s) => s.stations.find((x) => x.number === p.station));
   const select = useDashboard((s) => s.select);
   const v = useMemo(() => {
