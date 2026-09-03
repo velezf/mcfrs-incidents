@@ -161,3 +161,24 @@ describe("station helpers", () => {
     expect(isStationUnit("", 14)).toBe(false);
   });
 });
+
+describe("Station 14 roster designators (sourced 2026-09-03)", () => {
+  it("PRE714 is a Paramedic Rescue Engine at station 14", () => {
+    const p = parseUnit("PRE714");
+    expect([p.prefix, p.type, p.category, p.station, p.known]).toEqual(["PRE", "Paramedic Rescue Engine", "engine", 14, true]);
+  });
+  it("BE714 brush engine, BT714 boat, BS714B boat support with suffix, CH714 chief", () => {
+    expect(parseUnit("BE714").type).toBe("Brush Engine");
+    expect(parseUnit("BT714").type).toBe("Boat");
+    expect([parseUnit("BS714B").type, parseUnit("BS714B").suffix]).toEqual(["Boat Support", "B"]);
+    expect(parseUnit("CH714").category).toBe("chief");
+    expect(parseUnit("UTV714").type).toBe("UTV");
+  });
+  it("longest prefix still wins: PRE before PE and RE, BS before B, UTV before UT", () => {
+    expect(parseUnit("PE714").prefix).toBe("PE");
+    expect(parseUnit("RE714").prefix).toBe("RE");
+    expect(parseUnit("B714").prefix).toBe("B");
+    expect(parseUnit("UT714").prefix).toBe("UT");
+  });
+});
+

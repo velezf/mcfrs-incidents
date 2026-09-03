@@ -1,4 +1,5 @@
 "use client";
+import { useMemo } from "react";
 import { create } from "zustand";
 import type { IncidentWire, SourceHealth } from "@/types/incident";
 import type { PublicConfig } from "@/lib/config";
@@ -102,5 +103,11 @@ export function hydrateDashboard() {
 }
 
 /* ---- selectors ---- */
-export const selectVisible = (s: DashboardState) => sortIncidents(applyFilters(s.incidents, s.filters), s.sort);
+/** Derived list, memoized: a selector returning a fresh array every call would re-render forever. */
+export function useVisibleIncidents(): IncidentWire[] {
+  const incidents = useDashboard((s) => s.incidents);
+  const filters = useDashboard((s) => s.filters);
+  const sort = useDashboard((s) => s.sort);
+  return useMemo(() => sortIncidents(applyFilters(incidents, filters), sort), [incidents, filters, sort]);
+}
 export const selectSelected = (s: DashboardState) => s.incidents.find((i) => i.id === s.selectedId) ?? s.history.find((i) => i.id === s.selectedId);

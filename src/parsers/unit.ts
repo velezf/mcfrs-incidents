@@ -63,6 +63,17 @@ const UNKNOWN_TYPE = "Unknown";
  */
 export const DEFAULT_NOMENCLATURE: UnitNomenclature[] = [
   // Suppression
+  // Station 14 (UMCVFD) roster designators, sourced 2026-09-03 (src/data/stations.ts header)
+  { prefix: "PRE", type: "Paramedic Rescue Engine", category: "engine", role: "ALS" },
+  { prefix: "RE", type: "Rescue Engine", category: "engine" },
+  { prefix: "BE", type: "Brush Engine", category: "special" },
+  { prefix: "BT", type: "Boat", category: "special" },
+  { prefix: "BS", type: "Boat Support", category: "support" },
+  { prefix: "CT", type: "Canteen", category: "support" },
+  { prefix: "UT", type: "Utility", category: "support" },
+  { prefix: "SU", type: "Support Unit", category: "support" },
+  { prefix: "UTV", type: "UTV", category: "special" },
+  { prefix: "CH", type: "Chief", category: "chief" },
   { prefix: "PE", type: "Paramedic Engine", category: "engine", role: "ALS" },
   { prefix: "E", type: "Engine", category: "engine" },
   { prefix: "T", type: "Truck", category: "truck" },

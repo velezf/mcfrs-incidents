@@ -1,11 +1,11 @@
 "use client";
 import { useNow } from "@/lib/useNow";
-import { selectVisible, useDashboard } from "@/store/dashboard";
+import { useVisibleIncidents, useDashboard } from "@/store/dashboard";
 import { isFilterActive } from "@/lib/filters";
 import IncidentCard from "./IncidentCard";
 
 export default function IncidentList() {
-  const visible = useDashboard(selectVisible);
+  const visible = useVisibleIncidents();
   const total = useDashboard((s) => s.incidents.length);
   const selectedId = useDashboard((s) => s.selectedId);
   const freshIds = useDashboard((s) => s.freshIds);

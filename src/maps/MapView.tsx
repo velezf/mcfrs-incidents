@@ -6,7 +6,7 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet.markercluster";
-import { useDashboard, selectVisible } from "@/store/dashboard";
+import { useDashboard, useVisibleIncidents } from "@/store/dashboard";
 import { categoryStyle } from "@/lib/categories";
 import { isMajor, involvesStation, unitStation } from "@/lib/filters";
 import { COUNTY_BOUNDS, COUNTY_CENTER, hasLocation } from "@/lib/geo";
@@ -35,7 +35,7 @@ export default function MapView({ fitOnce = true, interactive = true }: { fitOnc
   const markers = useRef(new Map<string, L.Marker>());
   const fitted = useRef(false);
 
-  const visible = useDashboard(selectVisible);
+  const visible = useVisibleIncidents();
   const all = useDashboard((s) => s.incidents);
   const stations = useDashboard((s) => s.stations);
   const hospitals = useDashboard((s) => s.hospitals);
@@ -58,7 +58,10 @@ export default function MapView({ fitOnce = true, interactive = true }: { fitOnc
     map.current = m;
     const ro = new ResizeObserver(() => m.invalidateSize());
     ro.observe(el.current);
-    return () => { ro.disconnect(); m.remove(); map.current = null; };
+    return () => {
+      // Strict-mode / HMR remounts recreate the map: anything cached against the old one must go too.
+      ro.disconnect(); m.remove(); map.current = null; cluster.current = null; markers.current.clear(); fitted.current = false;
+    };
   }, [interactive]);
 
   // stations + hospitals

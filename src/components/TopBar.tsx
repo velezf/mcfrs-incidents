@@ -18,7 +18,7 @@ export default function TopBar() {
     <header className="flex h-11 shrink-0 items-center gap-3 border-b border-line bg-bg-1 px-3">
       <Link href="/" className="font-semibold tracking-wide text-fg">MCFRS <span className="text-fg-2 font-normal">INCIDENTS</span></Link>
       <span className="font-mono text-[11px] text-fg-2 tabular-nums">{count} active</span>
-      <SourceStatus detailed />
+      <div className="hidden sm:block"><SourceStatus detailed /></div>
       <div className="ml-auto flex items-center gap-2">
         <input
           type="search" value={search} onChange={(e) => setFilters({ search: e.target.value })} placeholder="search 714 · PE714 · Poolesville · HOUSE FIRE"
@@ -34,10 +34,10 @@ export default function TopBar() {
           <Link href="/ops" className="rounded px-1.5 py-1 hover:bg-bg-2 hover:text-fg">ops board</Link>
           <Link href="/admin" className="rounded px-1.5 py-1 hover:bg-bg-2 hover:text-fg">admin</Link>
         </nav>
-        <select aria-label="Theme" value={theme} onChange={(e) => setTheme(e.target.value as "dark" | "light" | "system")} className="rounded border border-line-2 bg-bg-1 px-1 py-1 font-mono text-[11px] text-fg-1">
+        <select aria-label="Theme" value={theme} onChange={(e) => setTheme(e.target.value as "dark" | "light" | "system")} className="hidden rounded border border-line-2 bg-bg-1 px-1 py-1 font-mono text-[11px] text-fg-1 md:block">
           <option value="dark">dark</option><option value="light">light</option><option value="system">system</option>
         </select>
-        <Clock className="text-[15px] text-fg" />
+        <Clock className="hidden text-[15px] text-fg sm:inline" />
       </div>
     </header>
   );

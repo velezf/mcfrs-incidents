@@ -10,7 +10,7 @@ const APPARATUS = ["PE", "E", "T", "AT", "A", "M", "RS", "BC", "B", "W", "HM"];
 function Chip({ on, onClick, children, title }: { on: boolean; onClick: () => void; children: React.ReactNode; title?: string }) {
   return (
     <button type="button" onClick={onClick} title={title} aria-pressed={on}
-      className={`rounded border px-1.5 py-0.5 font-mono text-[11px] leading-tight ${on ? "border-accent bg-accent/20 text-fg" : "border-line-2 text-fg-1 hover:bg-bg-2"}`}>
+      className={`shrink-0 whitespace-nowrap rounded border px-1.5 py-0.5 font-mono text-[11px] leading-tight ${on ? "border-accent bg-accent/20 text-fg" : "border-line-2 text-fg-1 hover:bg-bg-2"}`}>
       {children}
     </button>
   );
@@ -37,7 +37,7 @@ export default function FilterBar() {
 
   return (
     <div className="border-b border-line bg-bg-1">
-      <div className="flex flex-wrap items-center gap-1 px-2 py-1.5">
+      <div className="flex items-center gap-1 overflow-x-auto px-2 py-1.5 md:flex-wrap [scrollbar-width:none]">
         {presets.map((p) => <Chip key={p.id} on={activePresetId === p.id} onClick={() => onPreset(p)} title={p.focus ? "follows the focus station" : undefined}>{p.label}</Chip>)}
         {saved.map((p) => (
           <span key={p.id} className="inline-flex items-center">
@@ -45,7 +45,7 @@ export default function FilterBar() {
             <button type="button" aria-label={`delete preset ${p.label}`} onClick={() => deletePreset(p.id)} className="px-1 text-fg-3 hover:text-bad">×</button>
           </span>
         ))}
-        <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className="ml-auto rounded border border-line-2 px-1.5 py-0.5 font-mono text-[11px] text-fg-1 hover:bg-bg-2">
+        <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className="ml-auto shrink-0 rounded border border-line-2 px-1.5 py-0.5 font-mono text-[11px] text-fg-1 hover:bg-bg-2">
           {open ? "less" : "more filters"}
         </button>
       </div>
