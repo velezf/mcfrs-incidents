@@ -47,6 +47,7 @@ export default function MapView({ fitOnce = true, interactive = true }: { fitOnc
   // create once
   useEffect(() => {
     if (!el.current || map.current) return;
+    const cache = markers.current; // the Map object itself; stable for the life of the component
     const m = L.map(el.current, { zoomControl: interactive, dragging: interactive, scrollWheelZoom: interactive, attributionControl: true, preferCanvas: false });
     m.setView([COUNTY_CENTER.latitude, COUNTY_CENTER.longitude], 10);
     L.tileLayer(OSM, { attribution: ATTR, maxZoom: 19 }).addTo(m);
@@ -60,7 +61,7 @@ export default function MapView({ fitOnce = true, interactive = true }: { fitOnc
     ro.observe(el.current);
     return () => {
       // Strict-mode / HMR remounts recreate the map: anything cached against the old one must go too.
-      ro.disconnect(); m.remove(); map.current = null; cluster.current = null; markers.current.clear(); fitted.current = false;
+      ro.disconnect(); m.remove(); map.current = null; cluster.current = null; cache.clear(); fitted.current = false;
     };
   }, [interactive]);
 
