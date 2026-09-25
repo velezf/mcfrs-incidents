@@ -10,12 +10,11 @@ consumer of `/api/*` and should stay thin.
 
 ## Working agreement
 
-Same gates as the rocket repo (`../lora-rocket-telemetry/CLAUDE.md`, "Working
-agreement"): Frank approves every commit, merge and push; ask before pushing.
-Commit trailer: `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`.
-Cite, don't restate: literal values live at one authority (ports and hosts in
+Gates, TDD and commit format: `~/.claude/CLAUDE.md`. Cross-project conventions
+(cite, don't restate; hollow checks; shared Pi hardware): `~/code/CLAUDE.md`.
+Authorities for literal values in this repo: ports and hosts in
 `docker-compose.yml` / `.env.example`, the incident model in
-`api/mcfrs_api/models.py`, station data in `api/mcfrs_api/data/`).
+`api/mcfrs_api/models.py`, station data in `api/mcfrs_api/data/`.
 
 ## Layout
 
