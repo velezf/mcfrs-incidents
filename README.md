@@ -79,8 +79,9 @@ src/
 1. UI on mock data — done.
 2. Normalized storage + history + analytics + Docker — done (PostgreSQL via
    SQLAlchemy/Alembic; Docker Compose for db + api + web).
-3. Everbridge adapter from the sanitized request capture. What the capture
-   must answer is listed in `api/mcfrs_api/adapters/everbridge.py`.
+3. Live source. The Everbridge capture is unavailable (2026-11-17), so the
+   adapter is parked. The replacement plan (scanner-derived dispatch, county
+   open data for history) is `docs/adr/0001-incident-source-without-everbridge.md`.
 4. Live updates: the SSE endpoint exists; the frontend still polls every
    few seconds and switches to SSE next.
 5. Alerts, ops-board mode, communications view, admin page UI, PWA polish.

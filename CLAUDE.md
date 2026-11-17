@@ -5,8 +5,9 @@ source, normalizes, stores and serves it; a Next.js/React frontend that draws
 the operations-center UI. Frank maintains the Python; the React side is a
 consumer of `/api/*` and should stay thin.
 
-**Resume from `README.md` (build sequence, status) and `api/mcfrs_api/adapters/everbridge.py`
-(what phase 3 is waiting for).**
+**Resume from `README.md` (build sequence, status) and
+`docs/adr/0001-incident-source-without-everbridge.md` (phase 3: the source plan
+now that Everbridge is unavailable).**
 
 ## Working agreement
 
