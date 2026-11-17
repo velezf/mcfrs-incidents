@@ -7,7 +7,7 @@ consumer of `/api/*` and should stay thin.
 
 **Resume from `README.md` (build sequence, status) and
 `docs/adr/0001-incident-source-without-everbridge.md` (phase 3: the source plan
-now that Everbridge is unavailable).**
+now that Everbridge is ruled out).**
 
 ## Working agreement
 
@@ -62,3 +62,6 @@ docker compose up -d db                            # local Postgres on the port 
   (the admin endpoint masks config; `raw_payload` is excluded from the wire model).
 - Claim apparatus GPS position: units are CAD *assignments*.
 - Invent talkgroups: only when the source supplies them.
+- Use member-only CAD alerting products (Everbridge/msend, Active911 and
+  similar) as a data source, by capture, scraping or any other route. Their
+  data may not leave the product (`docs/adr/0001-incident-source-without-everbridge.md`).
