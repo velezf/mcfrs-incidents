@@ -85,6 +85,12 @@ src/
 4. Live updates: the SSE endpoint exists; the frontend still polls every
    few seconds and switches to SSE next.
 5. Alerts, ops-board mode, communications view, admin page UI, PWA polish.
+6. Desk display: an ESP8266 + 128×64 OLED rotating six pages. The design
+   and firmware live in the `mcfrs-desk-display` repo (its ADR 0001). This
+   repo builds the device endpoint it reads and runs on `apogee-gs`.
+
+How this repo fits with the scanner, transcription and display repos:
+`docs/adr/0002-system-architecture.md` (the canonical system map).
 
 ## Hydrants
 

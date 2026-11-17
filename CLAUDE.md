@@ -7,7 +7,8 @@ consumer of `/api/*` and should stay thin.
 
 **Resume from `README.md` (build sequence, status) and
 `docs/adr/0001-incident-source-without-everbridge.md` (phase 3: the source plan
-now that Everbridge is ruled out).**
+now that Everbridge is ruled out). How the MCFRS repos fit together:
+`docs/adr/0002-system-architecture.md` (canonical; other repos link to it).**
 
 ## Working agreement
 
