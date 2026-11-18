@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="1140" viewBox="0 0 960 1140" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>MCFRS system data flow</title>
+  <desc>Canonical map: mcfrs-incidents docs/adr/0002-system-architecture.md. Solid boxes are built, dashed boxes are planned.</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57606a"/>
+    </marker>
+    <style>
+      .t { font-size: 16px; font-weight: 700; fill: #1f2328; }
+      .b { font-size: 12.5px; fill: #1f2328; }
+      .s { font-size: 11.5px; fill: #57606a; }
+      .lbl { font-size: 11.5px; fill: #57606a; font-style: italic; }
+      .built { fill: #ffffff; stroke: #1a7f37; stroke-width: 2; }
+      .plan { fill: #ffffff; stroke: #0969da; stroke-width: 2; stroke-dasharray: 7 4; }
+      .gone { fill: #fff5f5; stroke: #cf222e; stroke-width: 1.5; stroke-dasharray: 5 4; }
+      .badgeB { font-size: 11px; font-weight: 700; fill: #1a7f37; }
+      .badgeP { font-size: 11px; font-weight: 700; fill: #0969da; }
+      .a { stroke: #57606a; stroke-width: 2; fill: none; marker-end: url(#arr); }
+      .ap { stroke: #57606a; stroke-width: 2; fill: none; stroke-dasharray: 6 4; marker-end: url(#arr); }
+    </style>
+  </defs>
+
+  <rect width="960" height="1140" fill="#ffffff"/>
+
+  <text x="30" y="40" font-size="24" font-weight="700" fill="#1f2328">MCFRS system — data flow</text>
+  <text x="30" y="62" class="s">Canonical map: mcfrs-incidents · docs/adr/0002-system-architecture.md · 2026-11-17</text>
+
+  <!-- antenna -->
+  <rect x="330" y="84" width="300" height="40" rx="8" class="built"/>
+  <text x="480" y="109" text-anchor="middle" class="b">Roof J-pole antenna</text>
+
+  <!-- host group -->
+  <rect x="30" y="146" width="900" height="614" rx="14" fill="#f6f8fa" stroke="#d0d7de"/>
+  <text x="46" y="168" font-size="13" font-weight="700" fill="#57606a">apogee-gs (Raspberry Pi 5)</text>
+
+  <line x1="480" y1="124" x2="480" y2="186" class="a"/>
+
+  <!-- dongle -->
+  <rect x="330" y="190" width="300" height="56" rx="8" class="built"/>
+  <text x="480" y="213" text-anchor="middle" class="t">RTL-SDR (one dongle)</text>
+  <text x="480" y="234" text-anchor="middle" class="s">time-shared between jobs</text>
+
+  <!-- apogee-sdr -->
+  <rect x="660" y="182" width="250" height="72" rx="8" class="plan"/>
+  <text x="785" y="204" text-anchor="middle" class="t">apogee-sdr</text>
+  <text x="785" y="224" text-anchor="middle" class="b">owns + schedules the dongle</text>
+  <text x="785" y="243" text-anchor="middle" class="s">tenants: scanner · I-Gate · ADS-B</text>
+  <line x1="660" y1="218" x2="632" y2="218" class="ap"/>
+
+  <line x1="480" y1="246" x2="480" y2="286" class="a"/>
+
+  <!-- scanner -->
+  <rect x="250" y="290" width="460" height="86" rx="10" class="built"/>
+  <text x="480" y="314" text-anchor="middle" class="t">mcfrs-scanner</text>
+  <text x="700" y="306" text-anchor="end" class="badgeB">BUILT</text>
+  <text x="480" y="338" text-anchor="middle" class="b">OP25 · P25 Phase II control channel + clear voice</text>
+  <text x="480" y="360" text-anchor="middle" class="s">owns: per-call audio + control-channel event formats</text>
+
+  <!-- live audio -->
+  <rect x="48" y="300" width="180" height="66" rx="8" class="built"/>
+  <text x="138" y="327" text-anchor="middle" class="t">Live audio</text>
+  <text x="138" y="349" text-anchor="middle" class="s">Icecast · listening page</text>
+  <line x1="250" y1="333" x2="231" y2="333" class="a"/>
+
+  <!-- scanner -> transcribe -->
+  <line x1="420" y1="376" x2="420" y2="436" class="ap"/>
+  <text x="412" y="411" text-anchor="end" class="lbl">per-call audio + metadata</text>
+  <line x1="540" y1="376" x2="540" y2="436" class="ap"/>
+  <text x="548" y="411" class="lbl">control-channel events</text>
+
+  <!-- transcribe -->
+  <rect x="250" y="440" width="460" height="96" rx="10" class="plan"/>
+  <text x="480" y="464" text-anchor="middle" class="t">mcfrs-dispatch-transcribe</text>
+  <text x="700" y="456" text-anchor="end" class="badgeP">PLANNED</text>
+  <text x="480" y="488" text-anchor="middle" class="b">local speech-to-text → match units, call types, addresses</text>
+  <text x="480" y="508" text-anchor="middle" class="b">+ fuse control-channel events</text>
+  <text x="480" y="527" text-anchor="middle" class="s">owns: dispatch event format</text>
+
+  <line x1="480" y1="536" x2="480" y2="596" class="ap"/>
+  <text x="488" y="571" class="lbl">dispatch events</text>
+
+  <!-- incidents -->
+  <rect x="250" y="600" width="460" height="130" rx="10" class="built"/>
+  <text x="480" y="624" text-anchor="middle" class="t">mcfrs-incidents</text>
+  <text x="700" y="616" text-anchor="end" class="badgeB">BUILT (mock source)</text>
+  <text x="480" y="648" text-anchor="middle" class="b">source adapter → normalizer → change detection</text>
+  <text x="480" y="668" text-anchor="middle" class="b">→ PostgreSQL → privacy → /api/*, SSE</text>
+  <text x="480" y="692" text-anchor="middle" class="s">owns: incident model · REST/SSE API · device payload</text>
+  <text x="480" y="714" text-anchor="middle" class="s">on-air staleness · inferred, not CAD</text>
+
+  <!-- left inputs -->
+  <rect x="50" y="600" width="170" height="56" rx="8" class="built"/>
+  <text x="135" y="623" text-anchor="middle" class="b" font-weight="700">Reference data</text>
+  <text x="135" y="643" text-anchor="middle" class="s">stations · hydrants</text>
+  <line x1="220" y1="628" x2="247" y2="628" class="a"/>
+
+  <rect x="50" y="672" width="170" height="56" rx="8" class="plan"/>
+  <text x="135" y="695" text-anchor="middle" class="b" font-weight="700">County open data</text>
+  <text x="135" y="715" text-anchor="middle" class="s">Socrata · history</text>
+  <line x1="220" y1="700" x2="247" y2="700" class="ap"/>
+
+  <!-- right inputs -->
+  <rect x="740" y="600" width="170" height="56" rx="8" class="plan"/>
+  <text x="825" y="623" text-anchor="middle" class="b" font-weight="700">apogee-sdr status</text>
+  <text x="825" y="643" text-anchor="middle" class="s">on-air · dongle owner</text>
+  <line x1="740" y1="628" x2="713" y2="628" class="ap"/>
+  <line x1="825" y1="254" x2="825" y2="596" class="ap"/>
+
+  <rect x="740" y="672" width="170" height="56" rx="8" class="plan"/>
+  <text x="825" y="695" text-anchor="middle" class="b" font-weight="700">NWS weather</text>
+  <text x="825" y="715" text-anchor="middle" class="s">conditions · alerts</text>
+  <line x1="740" y1="700" x2="713" y2="700" class="ap"/>
+
+  <!-- clients -->
+  <line x1="355" y1="730" x2="355" y2="796" class="a"/>
+  <text x="347" y="781" text-anchor="end" class="lbl">/api/*, SSE</text>
+  <line x1="605" y1="730" x2="605" y2="796" class="ap"/>
+  <text x="613" y="781" class="lbl">/api/device/pages</text>
+  <text x="480" y="781" text-anchor="middle" class="s">home LAN</text>
+
+  <rect x="250" y="800" width="210" height="64" rx="10" class="built"/>
+  <text x="355" y="826" text-anchor="middle" class="t">Web dashboard</text>
+  <text x="355" y="848" text-anchor="middle" class="s">Next.js · React · Leaflet</text>
+
+  <rect x="500" y="800" width="210" height="64" rx="10" class="plan"/>
+  <text x="605" y="826" text-anchor="middle" class="t">mcfrs-desk-display</text>
+  <text x="605" y="848" text-anchor="middle" class="s">ESP8266 · 128×64 OLED · 6 pages</text>
+
+  <!-- ruled out -->
+  <rect x="30" y="896" width="900" height="134" rx="12" class="gone"/>
+  <text x="46" y="920" font-size="14" font-weight="700" fill="#cf222e">Ruled out — not to be re-proposed</text>
+  <text x="46" y="946" class="b">• Everbridge (msend) and CAD relay apps (e.g. ActiveAlert): data may not leave the product</text>
+  <text x="46" y="968" class="b">• Over-the-air dispatch data (Motorola DATCH, standard SNDCP): checked 2026-11-17, no CAD text</text>
+  <text x="46" y="990" class="b">• PulsePoint unofficial API: not pursued</text>
+  <text x="46" y="1012" class="b">• LRRP radio positions: out of scope without its own ADR</text>
+
+  <!-- legend -->
+  <rect x="30" y="1056" width="40" height="22" rx="5" class="built"/>
+  <text x="78" y="1072" class="b">built</text>
+  <rect x="130" y="1056" width="40" height="22" rx="5" class="plan"/>
+  <text x="178" y="1072" class="b">planned / proposed</text>
+  <line x1="320" y1="1067" x2="370" y2="1067" class="a"/>
+  <text x="378" y="1072" class="b">data flowing today</text>
+  <line x1="520" y1="1067" x2="570" y2="1067" class="ap"/>
+  <text x="578" y="1072" class="b">planned flow / control</text>
+  <text x="30" y="1104" class="s">All server pieces run on apogee-gs. Scanner data exists only during its apogee-sdr slots;</text>
+  <text x="30" y="1121" class="s">consumers show data age and never read off-air silence as "no activity".</text>
+</svg>

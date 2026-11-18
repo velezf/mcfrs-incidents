@@ -19,34 +19,11 @@ handoff, so a format or rule is defined in one place.
 
 ## Data flow
 
-```
- roof J-pole ─► RTL-SDR (one dongle on apogee-gs)
-                   │  owner/scheduler: apogee-sdr (time-sliced with APRS I-Gate, ADS-B)
-                   ▼
- ┌──────────────── mcfrs-scanner ────────────────┐
- │ OP25 rx.py: P25 Phase II control + clear voice │
- │  ├─► live audio: Icecast + listening page       │  BUILT
- │  ├─► per-call audio files + call metadata       │  PLANNED (PLAN.md phase 7)
- │  └─► control-channel events (grants, affils)    │  PLANNED (transcribe ADR 0003)
- └────────────────────────┬───────────────────────┘
-                          ▼
- ┌─────────── mcfrs-dispatch-transcribe ──────────┐
- │ local speech-to-text ─► match to closed lists   │
- │ (units, call types, county address points)      │
- │ + fuse control-channel events ─► dispatch events│  PLANNED (ADRs 0001, 0003)
- └────────────────────────┬───────────────────────┘
-                          ▼
- ┌──────────────── mcfrs-incidents ───────────────┐
- │ source adapter ─► normalizer ─► change detection│
- │ ─► PostgreSQL ─► privacy ─► /api/*, SSE         │  BUILT (mock source)
- │ reference data: stations, hospitals, hydrants   │  BUILT
- │ + NWS weather, apogee-sdr status, county open   │
- │   data (history)                                │  PLANNED
- └───────┬──────────────────────────────┬─────────┘
-         ▼                              ▼
-  web dashboard (src/, React)   mcfrs-desk-display (ESP8266, 128×64)
-  BUILT                         via /api/device/pages ─ PLANNED
-```
+![MCFRS system data flow](0002-system-architecture.svg)
+
+The diagram is `0002-system-architecture.svg` beside this file. Solid boxes
+are built, dashed boxes are planned. It is the only picture of the map; the
+roles table below is its text form.
 
 All server-side pieces run on `apogee-gs`. The desk display and browsers
 reach `mcfrs-incidents` over the home LAN.
@@ -101,8 +78,9 @@ format it emits, and this repo owns the incident model.
 
 - A new handoff gets its format defined in the producing repo, and this map
   gains one line.
-- When a PLANNED box becomes BUILT, update its label here. This is the only
-  copy of the map.
+- When a PLANNED box becomes BUILT, change its border and badge in
+  `0002-system-architecture.svg` and its row below. These are the only copies
+  of the map.
 
 ## Trigger to revisit
 
